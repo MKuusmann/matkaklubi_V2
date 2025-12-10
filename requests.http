@@ -1,0 +1,32 @@
+### Get all hikes
+GET http://localhost:8085/api/matk
+### Get one hike by ID
+GET HTTP://localhost:8085/api/matk/1
+### Add a new hike
+POST http://localhost:8085/api/matk
+Content-Type: application/json
+
+{
+  "nimetus": "Suusamatk Jõulumäel",
+  "kirjeldus": "Kaunis uus matk.",
+  "pildiUrl": "https://example.com/newhike.jpg"
+}
+
+
+### Delete a hike by ID
+DELETE http://localhost:8085/api/matk/4
+
+### Return participans of a hike
+GET http://localhost:8085/api/matk/1/osalejad
+
+### Add one participant to a hike
+POST http://localhost:8085/api/matk/1/osaleja
+
+### Patch data of one hike (tühjad andmed säilitavad vana väärtuse)
+PATCH http://localhost:8085/api/matk/1
+Content-Type: application/json
+
+{
+  "kirjeldus": "Veel uuem kirjeldus."
+}
+

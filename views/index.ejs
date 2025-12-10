@@ -48,9 +48,9 @@
             <div class="card">
                 <img class="card-img-top" src="<%= matkad[0].pildiUrl %>" alt="Matka pilt" />
                 <div class="card-body">
-                    <h5 class="card-title"><%= matkad[0].nimetus %></h5>
-                    <p class="card-text"><%= matkad[0].kirjeldus %></p>
-                    <a href="#" class="btn btn-primary">Vaata lähemalt</a>
+                    <h5 class="card-title"><%= matk.nimetus %></h5>
+                    <p class="card-text"><%= matk.kirjeldus %></p>
+                    <a href="/matk/<%= matk.id %>" class="btn btn-primary">Vaata lähemalt</a>
                 </div>
             </div>
         </div>
