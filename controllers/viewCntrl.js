@@ -43,11 +43,10 @@ export function regCntrl(req, res) {
         res.render('matk', {matk: hike, error: error, success: ""})
         return
     }
-    const lisatud = addOsaleja(hikeId, nimi, email)
-    if (!lisatud) {
-        res.render('matk', {matk: hike, error: "Regristreerumine ebaõnnestus!", success: ""})
-        return
+    try {
+        addOsaleja(hikeId, nimi, email)
+        res.render('matk', {matk: hike, error:"", success: "Olete regristreeritud!"})
+    } catch (error) {
+        res.render('matk', {matk: hike, error: error.message || "Regristreerumine ebaõnnestus!", success: ""})
     }
-
-    res.render('matk', {matk: hike, error:"", success: "Olete regristreeritud!"})
 }

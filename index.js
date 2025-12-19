@@ -11,7 +11,7 @@ import {
     apiPostParticipantCntrl
 } from './controllers/apiCntrl.js'
 import { adminCntrl } from './controllers/adminViewCntrl.js'
-import { initModel } from './model/matkad.js'
+import { initModel } from './model/matkadMongoDb.js'
 
 const app = express()
 

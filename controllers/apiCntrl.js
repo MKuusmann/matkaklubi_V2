@@ -87,6 +87,10 @@ export function apiHealthCntrl(req, res) {
 
 export function apiPostParticipantCntrl(req, res) {
     console.log(req.body)
-    addOsaleja(req.params.id, req.body.nimi, req.body.email)
-    res.status(201).end()
+    try {
+        addOsaleja(req.params.id, req.body.nimi, req.body.email)
+        res.status(201).end()
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
