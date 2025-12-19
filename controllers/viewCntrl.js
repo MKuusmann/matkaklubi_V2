@@ -1,4 +1,4 @@
-import { addOsaleja, getMatkadModel, getMatkModel } from '../model/matkad.js'
+import { addOsaleja, getMatkadModel, getMatkModel } from '../model/matkadMongoDb.js'
 
 
 export function indexCntrl(req, res) {

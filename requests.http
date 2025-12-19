@@ -1,7 +1,7 @@
 ### Get all hikes
 GET http://localhost:8085/api/matk
 ### Get one hike by ID
-GET HTTP://localhost:8085/api/matk/1
+GET HTTP://localhost:8085/api/matk/4
 ### Add a new hike
 POST http://localhost:8085/api/matk
 Content-Type: application/json
@@ -17,10 +17,16 @@ Content-Type: application/json
 DELETE http://localhost:8085/api/matk/4
 
 ### Return participans of a hike
-GET http://localhost:8085/api/matk/1/osalejad
+GET http://localhost:8085/api/matk/2/osalejad
 
 ### Add one participant to a hike
-POST http://localhost:8085/api/matk/1/osaleja
+POST http://localhost:8085/api/matk/2/osaleja
+Content-Type: application/json
+
+{
+  "nimi": "Mari Tamm",
+  "email": "mari.tamm@mail.com"
+}
 
 ### Patch data of one hike (tühjad andmed säilitavad vana väärtuse)
 PATCH http://localhost:8085/api/matk/1

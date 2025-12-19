@@ -1,4 +1,4 @@
-import { getMatkadModel, getMatkModel, addMatkModel, patchMatkModel, deleteMatkModel } from '../model/matkad.js'
+import { getMatkadModel, getMatkModel, addMatkModel, patchMatkModel, deleteMatkModel, addOsaleja } from '../model/matkadMongoDb.js'
 
 export function apiAllHikesCntrl(req, res) {
     const matkad = getMatkadModel()
@@ -83,4 +83,10 @@ export function apiPatchHikeCntrl(req, res) {
 export function apiHealthCntrl(req, res) {
     const uptime = process.uptime()
     res.status(200).json({status: "OK", uptime: uptime+" s"})
+}
+
+export function apiPostParticipantCntrl(req, res) {
+    console.log(req.body)
+    addOsaleja(req.params.id, req.body.nimi, req.body.email)
+    res.status(201).end()
 }

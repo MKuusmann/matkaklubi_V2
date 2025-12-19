@@ -37,6 +37,7 @@ function renderErrorRightPane() {
 function renderRightPane(hike) {
     const rightPaneEl = document.getElementById('right-pane')
     const rightPaneHTML = getRightPaneHTML({
+        id: hike.id,
         nimi: hike.nimetus,
         kirjeldus: hike.kirjeldus,
         osalejad: hike.osalejad
@@ -44,7 +45,7 @@ function renderRightPane(hike) {
     rightPaneEl.innerHTML = rightPaneHTML
 }
 
-function getRightPaneHTML({nimi, kirjeldus, osalejad}) {
+function getRightPaneHTML({id, nimi, kirjeldus, osalejad}) {
     let osalejateHTML = ''
     osalejad.forEach((osaleja) => {
         osalejateHTML += `
@@ -63,7 +64,33 @@ function getRightPaneHTML({nimi, kirjeldus, osalejad}) {
             <div class="col-6">Email</div>
         </div>
         ${osalejateHTML}
+        <div class="row">
+            <div class="col-6">
+                <input type="text" id="osalejaNimi">
+            </div>
+            <div class="col-6">
+                <input type="text" id="osalejaEmail">
+            </div>
+            <div class="col-6">
+                <button class="btn btn-link" onClick="addParticipant(${id})">Lisa osaleja</button>
+            </div>
+        </div>
     `
+}
+
+async function addParticipant(hikeId) {
+    const name = document.getElementById('osalejaNimi').value
+    const email = document.getElementById('osalejaEmail').value
+    console.log(name, email)
+    if (!name || !email) {
+        return
+    }
+    await postHikeParticipant({
+        id: hikeId,
+        name: name,
+        email: email
+    })
+    clickOnLeftPaneItem(hikeId)
 }
 
 function renderPage(hikes, hikeIdInRightPane = null) {
@@ -99,6 +126,25 @@ async function fetchHikeDetails(id) {
     const hike = await response.json()
     console.log('Ühe matka päring lõpetatud.', hike)
     return hike
+}
+
+async function postHikeParticipant({id, name, email}) {
+    const participant = {
+        nimi: name,
+        email: email
+    }
+    const response = await fetch(`${allHikesUrl}/${id}/osaleja`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: 'POST',
+        body: JSON.stringify(participant)
+    })
+    if (!response.ok) {
+        showError('Osaleja lisamine ebaõnnestus')
+        return null
+    }
 }
 
 async function initRender() {

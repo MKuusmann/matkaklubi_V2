@@ -7,7 +7,8 @@ import {
     apiDeleteHikeCntrl,
     apiPatchHikeCntrl,
     apiHealthCntrl,
-    apiOneHikeDetailsCntrl
+    apiOneHikeDetailsCntrl,
+    apiPostParticipantCntrl
 } from './controllers/apiCntrl.js'
 import { adminCntrl } from './controllers/adminViewCntrl.js'
 import { initModel } from './model/matkad.js'
@@ -34,6 +35,7 @@ app.post('/api/matk', apiAddHikeCntrl)
 app.delete('/api/matk/:id', apiDeleteHikeCntrl)
 app.patch('/api/matk/:id', apiPatchHikeCntrl)
 app.get('/api/matk/:id', apiOneHikeDetailsCntrl)
+app.post('/api/matk/:id/osaleja', apiPostParticipantCntrl)
 
 const port = process.env.PORT || 8085
 
