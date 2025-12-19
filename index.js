@@ -1,4 +1,5 @@
 import express from 'express' 
+import session from 'express-session'
 import { indexCntrl, kontaktCntrl, hikeCntrl, regCntrl } from './controllers/viewCntrl.js'
 import { 
     apiAllHikesCntrl,
@@ -10,7 +11,7 @@ import {
     apiOneHikeDetailsCntrl,
     apiPostParticipantCntrl
 } from './controllers/apiCntrl.js'
-import { adminCntrl } from './controllers/adminViewCntrl.js'
+import { adminCntrl, requireAuth, loginCntrl, loginPostCntrl, logoutCntrl } from './controllers/adminViewCntrl.js'
 import { initModel } from './model/matkadMongoDb.js'
 
 const app = express()
@@ -19,6 +20,18 @@ app.use('/', express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+// Session configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'default-secret-change-in-production',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+}))
+
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
@@ -26,7 +39,16 @@ app.get('/', indexCntrl)
 app.get('/kontakt', kontaktCntrl)
 app.get('/matk/:id', hikeCntrl)
 app.get('/matk/:id/regristreerumine', regCntrl)
-app.get('/admin', adminCntrl)
+
+// Login routes (before protected admin route)
+app.get('/admin/login', loginCntrl)
+app.post('/admin/login', loginPostCntrl)
+
+// Protected admin route
+app.get('/admin', requireAuth, adminCntrl)
+
+// Logout route
+app.post('/admin/logout', requireAuth, logoutCntrl)
 
 app.get('/api/health', apiHealthCntrl)
 app.get('/api/matk', apiAllHikesCntrl)
