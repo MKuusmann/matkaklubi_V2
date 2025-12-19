@@ -15,12 +15,16 @@
 <body>
     <div class="container">
         <%- include('components/header') %>
-        </div>
-        <div class="container">
+    </div>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Matkad administreerimine</h2>
-            <div class="admin-konteiner" id="admin-konteiner">
+            <form method="POST" action="/admin/logout" style="display: inline;">
+                <button type="submit" class="btn btn-outline-secondary">Logi välja</button>
+            </form>
+        </div>
+        <div class="admin-konteiner" id="admin-konteiner">
 
-            </div>
         </div>
     </div>
 
